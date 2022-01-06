@@ -15,7 +15,6 @@ import ta.trend
 import ta.volatility
 import api_keys
 
-
 client = Client(api_keys.api_key, api_keys.api_secret)
 
 logger = logging.getLogger('SimpleDCABot')
