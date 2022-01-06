@@ -1,6 +1,6 @@
 # Binance DCA Bot backtesting
 
-The bot tries to mimit the 3commas bot using:
+Loadning historical data from Binance, The bot tries to mimit the 3commas bot using:
 
 - Base order
 - Safe order
@@ -9,6 +9,21 @@ The bot tries to mimit the 3commas bot using:
 - Safe order threshold step
 
 You can specify the range you want for each parameter and the bot will test each combination.
+
+## Strategy
+
+To open the first trade the bot can use two strategies (strategy parameter):
+
+- [always] Open as soon as possible, always open a new trade (total active trades = 1)
+- [position_sma] Use SMA 20 > SMA 50 and SMA 50 > SMA 100 
+
+The SMA strategy is described in the tecnincals function:
+
+```
+df['Buy_sma2'] = np.where((df['SMA20'] > df['SMA50']) & (df['SMA50'] > df['SMA100']), 1.0, 0.0)
+
+df['position_sma'] = df['Buy_sma2'].diff()
+```
 
 ## Configuration
 
