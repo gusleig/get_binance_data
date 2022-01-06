@@ -522,9 +522,7 @@ def apply_technicals(pair='BTCUSDT'):
     print("Done")
 
 
-def get_binance_data(engine, days='10'):
-
-    coins = ('BTCUSDT',)
+def get_binance_data(coins, engine, days='10'):
 
     for coin in tqdm(coins):
 
@@ -547,18 +545,10 @@ def createList(r1, r2, r3):
     return np.arange(r1, r2+r3, r3)
 
 
-def test_bot():
+def test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale):
 
     # pair, bag, max_open_trades,
     # ttp, base_order_size, safety_order_size, sos, max_safety_orders, volume_scale, safety_scale, safe_order_step_scale):
-    profit = safe_arange(1, 3.5, 0.5)
-    bo = safe_arange(100, 120, 20)
-    so = safe_arange(100, 220, 20)
-    sos = safe_arange(1, 3.5, 0.5)
-    qtd_so = safe_arange(4, 8, 1)
-    vol_scale = safe_arange(1, 2, 1)
-    saf_scale = safe_arange(1, 2, 1)
-    saf_step_scale = safe_arange(1, 1.3, 0.1)
 
     a = [profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale]
 
@@ -569,7 +559,9 @@ def test_bot():
     for test in tqdm(a):
         dict1 = {}
         account = AccountBag('USDT', 10000)
+
         bot = SimpleDCABot('position_sma', 'BTCUSDT', account, 1, *test)
+
         result, total_usdt, total_trades, total_closed = bot.start()
 
         dict1.update({'Test': test, 'Total_USDT': total_usdt, 'Final_USDT': account.get_balance("USDT"), 'Final_BTC': account.get_balance("BTC"), 'Total_opened_trades': total_trades, 'Total_closed_trades': total_closed, 'Bot_trades': result})
@@ -587,22 +579,23 @@ if __name__ == '__main__':
 
     fname = 'Cryptoprices.db'
 
+    coins = ('BTCUSDT',)
+
+    days_str = '400'
+
     if not os.path.isfile(fname):
-        get_binance_data(engine, '400')
+        get_binance_data(coins, engine, days_str)
 
-    results = test_bot()
+    profit = safe_arange(1, 3.5, 0.5)
+    bo = safe_arange(100, 120, 20)
+    so = safe_arange(100, 220, 20)
+    sos = safe_arange(1, 3.5, 0.5)
+    qtd_so = safe_arange(4, 8, 1)
+    vol_scale = safe_arange(1, 2, 1)
+    saf_scale = safe_arange(1, 2, 1)
+    saf_step_scale = safe_arange(1, 1.3, 0.1)
 
-    # account = AccountBag('USDT', 2000)
-
-    # bot = SimpleDCABot(True, 'BTCUSDT', account, 1, 1, 100, 100, 2, 5, 2, 2, 1.1)
-
-    # result = bot.start()
-
-    # account2 = AccountBag('USDT', 2000)
-
-    # bot2 = SimpleDCABot(True, 'BTCUSDT', account2, 1, 1, 100, 150, 2, 4, 2, 2, 1.1)
-
-    # result2 = bot2.start()
+    results = test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale)
 
     print("Fim")
 
