@@ -545,7 +545,7 @@ def createList(r1, r2, r3):
     return np.arange(r1, r2+r3, r3)
 
 
-def test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale):
+def test_bot(wallet_init, profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale, debug=False):
 
     # pair, bag, max_open_trades,
     # ttp, base_order_size, safety_order_size, sos, max_safety_orders, volume_scale, safety_scale, safe_order_step_scale):
@@ -558,9 +558,9 @@ def test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale):
 
     for test in tqdm(a):
         dict1 = {}
-        account = AccountBag('USDT', 10000)
+        account = AccountBag('USDT', wallet_init)
 
-        bot = SimpleDCABot('position_sma', 'BTCUSDT', account, 1, *test)
+        bot = SimpleDCABot('position_sma', 'BTCUSDT', account, 1, *test, debug=debug)
 
         result, total_usdt, total_trades, total_closed = bot.start()
 
@@ -583,8 +583,7 @@ if __name__ == '__main__':
 
     days_str = '400'
 
-    if not os.path.isfile(fname):
-        get_binance_data(coins, engine, days_str)
+    wallet_init = 10000
 
     profit = safe_arange(1, 3.5, 0.5)
     bo = safe_arange(100, 120, 20)
@@ -595,7 +594,10 @@ if __name__ == '__main__':
     saf_scale = safe_arange(1, 2, 1)
     saf_step_scale = safe_arange(1, 1.3, 0.1)
 
-    results = test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale)
+    if not os.path.isfile(fname):
+        get_binance_data(coins, engine, days_str)
+
+    results = test_bot(profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale, debug=True)
 
     print("Fim")
 
