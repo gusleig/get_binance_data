@@ -2,11 +2,14 @@
 
 Loadning historical data from Binance, The bot tries to mimit the 3commas bot using:
 
-- Base order
-- Safe order
-- 1st safe order threshold
-- Safe order volume step
-- Safe order threshold step
+
+- profit. Profit percentage %.
+- bo = Base order value.
+- so = First Safety order value.
+- sos = Percentage threshold to open a safety order
+- qtd_so = Max number of safety order.
+- saf_scale = Safety order volume scale.
+- saf_step_scale = safe_arange(1, 1.3, 0.1)
 
 You can specify the range you want for each parameter and the bot will test each combination.
 

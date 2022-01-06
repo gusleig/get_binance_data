@@ -161,7 +161,7 @@ class Trade:
 
 class SimpleDCABot:
 
-    def __init__(self, condition, pair, bag, max_open_trades, ttp, base_order_size, safety_order_size, sos, max_safety_orders, volume_scale, safety_scale, safe_order_step_scale, debug=False):
+    def __init__(self, condition, pair, bag, max_open_trades, ttp, base_order_size, safety_order_size, sos, max_safety_orders, safety_scale, safe_order_step_scale, debug=False):
 
         self.pair = pair
         self.logger = logger
@@ -171,7 +171,6 @@ class SimpleDCABot:
         self.sos = sos
         self.max_safety_orders = max_safety_orders
         self.safe_order_step_scale = safe_order_step_scale
-        self.volume_scale = volume_scale
         self.safety_scale = safety_scale
         self.max_open_trades = max_open_trades
         self.open_trades = 0
@@ -545,12 +544,12 @@ def createList(r1, r2, r3):
     return np.arange(r1, r2+r3, r3)
 
 
-def test_bot(wallet_init, strategy, profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale, debug=False):
+def test_bot(wallet_init, strategy, profit, bo, so, sos, qtd_so, saf_scale, saf_step_scale, debug=False):
 
     # pair, bag, max_open_trades,
     # ttp, base_order_size, safety_order_size, sos, max_safety_orders, volume_scale, safety_scale, safe_order_step_scale):
 
-    a = [profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale]
+    a = [profit, bo, so, sos, qtd_so, saf_scale, saf_step_scale]
 
     a = list(itertools.product(*a))
 
@@ -593,14 +592,13 @@ if __name__ == '__main__':
     so = safe_arange(100, 220, 20)
     sos = safe_arange(1, 3.5, 0.5)
     qtd_so = safe_arange(4, 8, 1)
-    vol_scale = safe_arange(1, 2, 1)
     saf_scale = safe_arange(1, 2, 1)
     saf_step_scale = safe_arange(1, 1.3, 0.1)
 
     if not os.path.isfile(fname):
         get_binance_data(coins, engine, days_str)
 
-    results = test_bot(wallet_init, strategy, profit, bo, so, sos, qtd_so, vol_scale, saf_scale, saf_step_scale, debug=True)
+    results = test_bot(wallet_init, strategy, profit, bo, so, sos, qtd_so, saf_scale, saf_step_scale, debug=True)
 
     print("Fim")
 
