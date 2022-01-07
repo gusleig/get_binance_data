@@ -1,7 +1,11 @@
 # Binance DCA Bot backtesting
+I needed a tool to test trading bot best configuration with historical data.
 
-Loadning historical data from Binance, The bot tries to mimit the 3commas bot using:
+What is the best number of safety orders? What is the best threshold ?
 
+To answer these questions you need to backtest your bot for each coin you are trading.
+
+Loading historical data from Binance, The bot tries to mimit the 3commas bot using:
 
 - profit. Profit percentage %.
 - bo = Base order value.
@@ -9,9 +13,11 @@ Loadning historical data from Binance, The bot tries to mimit the 3commas bot us
 - sos = Percentage threshold to open a safety order
 - qtd_so = Max number of safety order.
 - saf_scale = Safety order volume scale.
-- saf_step_scale = safe_arange(1, 1.3, 0.1)
+- saf_step_scale = threshold multiplier for safety orders
 
 You can specify the range you want for each parameter and the bot will test each combination.
+
+With the value you put in the wallet parameter, at the end you can tell which configuration made more money.
 
 ## Strategy
 

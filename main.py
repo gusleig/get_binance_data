@@ -567,7 +567,7 @@ def test_bot(wallet_init, strategy, profit, bo, so, sos, qtd_so, saf_scale, saf_
 
         results.append(dict1)
 
-    df = pd.DataFrame(results).sort_values(by=['Final_USDT'], ascending=False)
+    df = pd.DataFrame(results).sort_values(by=['Total_USDT'], ascending=False)
 
     return df
 
