@@ -1,18 +1,22 @@
-from tqdm import tqdm
-import pandas as pd
-from binance.client import Client
-import sqlalchemy
-import numpy as np
-import os
-import logging
-import threading
-import sys
 import itertools
+import logging
+import os
+import sys
+
+
+import threading
+
 # import talib as ta
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import sqlalchemy
 import ta.momentum
 import ta.trend
 import ta.volatility
+from binance.client import Client
+from tqdm import tqdm
+
 import api_keys
 
 client = Client(api_keys.api_key, api_keys.api_secret)
